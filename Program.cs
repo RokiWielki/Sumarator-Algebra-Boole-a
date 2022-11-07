@@ -13,6 +13,11 @@ namespace Sumarator
         static void Main(string[] args)
         {
             ManualTest();
+            Console.WriteLine();
+            Console.WriteLine("Dowolny przycisk aby kontynuować...");
+            Console.ReadKey();
+            AllPossibilities();
+
         }
         
         private static void ManualTest()
@@ -95,6 +100,44 @@ namespace Sumarator
 
                 Write("Podaj drugą cyfrę: ");
             }
+        }
+        private static void AllPossibilities()
+        {
+            int parity = 0;
+            int trials = 0;
+            List<string> binary = Constants.BinaryInput();
+
+            foreach (string variable in binary)
+            {
+                int baseOfSum = Convert.ToInt32(variable, 2);
+                for (int i = 0; i < binary.Count; i++)
+                {
+                    
+                    Write(variable);
+                    
+                    Write(" + " + binary[i] + " = ");
+                    int targetOfSum = Convert.ToInt32(binary[i], 2);
+                    string result = Convert.ToString(baseOfSum + targetOfSum, 2).PadLeft(4, '0');
+                    if (result.Length > 4)
+                    {
+                        result = result.Remove(0, result.Length - 4);
+                        Write(result);
+                        WriteLine(" [Overflow]");
+                    }
+                    else
+                    {
+                        WriteLine(result);
+                    }
+
+                    trials++;
+                }
+                parity++;
+            }
+
+            if (trials == 1)
+                WriteLine($"Wykonano: {trials} raz!");
+            else
+                WriteLine($"Wykonano: {trials} razy!");
         }
 
     }
